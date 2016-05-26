@@ -1,0 +1,48 @@
+﻿@model IEnumerable<TesteAp81.Intranet.Models.ClienteViewModel>
+
+@{
+    ViewBag.Title = "Home Principal";
+}
+<div class="animated zoomInDown">
+
+    <h2>Olá @ViewBag.UserNome - Departamento: @ViewBag.UserDepartamento</h2>
+
+    <p>
+        @Html.ActionLink("Adicionar Cliente", "AdicionarCliente")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>Ação</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "EditarCliente", new { id = item.Id })
+                    @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
+                    @*@Html.ActionLink("Excluir", "InativarCliente", new { id=item.Id })*@
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
