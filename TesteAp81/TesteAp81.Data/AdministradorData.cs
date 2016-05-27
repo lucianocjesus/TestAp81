@@ -30,6 +30,7 @@ namespace TesteAp81.Data
 					command.Parameters.AddWithValue("@pCodigo", pCodigo);
 
 					SqlDataReader reader = command.ExecuteReader();
+				    
 					if (reader.Read())
 					{
 						administrador.Id = reader.GetInt32(0);

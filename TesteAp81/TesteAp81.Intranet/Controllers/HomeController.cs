@@ -41,7 +41,7 @@ namespace TesteAp81.Intranet.Controllers
         }
 
         [HttpPost]
-        public ActionResult AdcionarCliente(ClienteViewModel clienteView)
+        public ActionResult AdicionarCliente(ClienteViewModel clienteView)
         {
             if (ModelState.IsValid)
             {

@@ -24,9 +24,11 @@ namespace TesteAp81.Intranet
 			if (windowsIdentity != null)
 			{
 				var acesso = !string.IsNullOrEmpty(ConfigurationManager.AppSettings["isDebug"]) ? ConfigurationManager.AppSettings["isDebug"] : windowsIdentity.Name;
+                //var acesso = windowsIdentity.Name;
+
 				var adm = new AdministradorBusiness().AcessoIntranet(acesso.Split('\\')[1]);
 				Session["userCodigo"] = adm.Codigo;
-				Session["UserNome"] = adm.Nome;
+                Session["UserNome"] = windowsIdentity.Name.Split('\\')[1];
 				Session["UserDepartamento"] = adm.Departamento;
 			}
 		}
