@@ -16,14 +16,14 @@ namespace TesteAp81.Intranet.Controllers
             ViewBag.UserDepartamento = Session["UserDepartamento"];
         }
 
-        public ActionResult Index(ClienteViewModel clienteView)
+        public ActionResult Index()
         {
             List<ClienteViewModel> lstList = new List<ClienteViewModel>();
             ClienteBusiness clienteBusiness = new ClienteBusiness();
             var lstClientes = clienteBusiness.ListaClientes();
             foreach (Cliente c in lstClientes)
             {
-                clienteView = new ClienteViewModel();
+                var clienteView = new ClienteViewModel();
                 clienteView.Id = c.Id;
                 clienteView.Nome = c.Nome;
                 clienteView.Email = c.Email;
