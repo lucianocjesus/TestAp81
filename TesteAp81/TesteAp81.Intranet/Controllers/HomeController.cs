@@ -18,8 +18,8 @@ namespace TesteAp81.Intranet.Controllers
 
         public ActionResult Index()
         {
-            List<ClienteViewModel> lstList = new List<ClienteViewModel>();
-            ClienteBusiness clienteBusiness = new ClienteBusiness();
+            var lstList = new List<ClienteViewModel>();
+            var clienteBusiness = new ClienteBusiness();
             var lstClientes = clienteBusiness.ListaClientes();
             foreach (Cliente c in lstClientes)
             {
