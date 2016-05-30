@@ -32,7 +32,7 @@ namespace TesteAp81.Data
 					command.Parameters.AddWithValue("@pEmail", pEmail);
 					command.Parameters.AddWithValue("@pSenha", pSenha);
 
-					SqlDataReader reader = command.ExecuteReader();
+					var reader = command.ExecuteReader();
 					if (reader.Read())
 					{
 						cliente.Id = reader.GetInt32(0);
@@ -41,9 +41,9 @@ namespace TesteAp81.Data
 						cliente.Senha = reader.GetString(3);
 					}
 				}
-				catch (Exception)
+				finally
 				{
-					throw;
+					_objSqlConnection.Close();
 				}
 
 			}
@@ -62,7 +62,7 @@ namespace TesteAp81.Data
 					var command = new SqlCommand(queryString, _objSqlConnection);
 					command.Parameters.AddWithValue("@pId", id);
 
-					SqlDataReader reader = command.ExecuteReader();
+					var reader = command.ExecuteReader();
 					if (reader.Read())
 					{
 						cliente.Id = reader.GetInt32(0);
@@ -88,7 +88,7 @@ namespace TesteAp81.Data
 				try
 				{
 					_objSqlConnection.Open();
-					SqlCommand command = new SqlCommand();
+					var command = new SqlCommand();
 					const string queryString =
 						"Update dbo.TB_Cliente Set Nome = @pNome, Email = @pEmail, Senha = @pSenha, Status = @pStatus Where id = @pId";
 					command.Connection = _objSqlConnection;
@@ -128,7 +128,7 @@ namespace TesteAp81.Data
 
 		public bool VerificaEmail(string pEmail)
 		{
-			bool bExiste = false;
+			var bExiste = false;
 			using (_objSqlConnection)
 			{
 				try
@@ -138,7 +138,7 @@ namespace TesteAp81.Data
 					var command = new SqlCommand(queryString, _objSqlConnection);
 					command.Parameters.AddWithValue("@pEmail", pEmail);
 
-					SqlDataReader reader = command.ExecuteReader();
+					var reader = command.ExecuteReader();
 					if (reader.Read())
 						bExiste = true;
 
@@ -153,7 +153,7 @@ namespace TesteAp81.Data
 
 		public List<Cliente> ListaClientes()
 		{
-			List<Cliente> lstClientes = new List<Cliente>();
+			var lstClientes = new List<Cliente>();
 			using (_objSqlConnection)
 			{
 				try
@@ -161,7 +161,7 @@ namespace TesteAp81.Data
 					_objSqlConnection.Open();
 					const string queryString = "SELECT * FROM dbo.TB_Cliente";
 					var command = new SqlCommand(queryString, _objSqlConnection);
-					SqlDataReader reader = command.ExecuteReader();
+					var reader = command.ExecuteReader();
 					while (reader.Read())
 					{
 						var cliente = new Cliente();
@@ -173,10 +173,6 @@ namespace TesteAp81.Data
 						lstClientes.Add(cliente);
 					}
 					reader.Close();
-				}
-				catch (Exception)
-				{
-					throw;
 				}
 				finally
 				{
@@ -194,7 +190,7 @@ namespace TesteAp81.Data
 				try
 				{
 					_objSqlConnection.Open();
-					SqlCommand command = new SqlCommand();
+					var command = new SqlCommand();
 					const string queryString = "Insert into dbo.TB_Cliente Values(@pNome, @pEmail, @pSenha, @pstatus)";
 					command.Connection = _objSqlConnection;
 					command.CommandTimeout = 0;
