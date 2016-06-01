@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Web.Mvc;
 using TesteAp81.Business;
+using TesteAp81.Business.Contracts;
 using TesteAp81.Web.Models;
 
 namespace TesteAp81.Web.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly IClienteBusinessRepository _repository;
+
+        public LoginController()
+        {
+            _repository = new ClienteBusiness();
+        }
+
         public ActionResult Index()
         {
             var loginClienteView = new LoginClienteViewModel();
@@ -20,7 +28,9 @@ namespace TesteAp81.Web.Controllers
             {
                 try
                 {
-                    var cliente = new ClienteBusiness().Login(loginCliente.Email, loginCliente.Senha);
+                    //var cliente = new ClienteBusiness().Login(loginCliente.Email, loginCliente.Senha);
+                    //var cliente = new ClienteBusiness().GetLogin(loginCliente.Email, loginCliente.Senha);
+                    var cliente = _repository.GetLogin(loginCliente.Email, loginCliente.Senha);
                     var clienteView = new ClienteViewModel
                     {
                         Id = cliente.Id,
@@ -49,18 +59,9 @@ namespace TesteAp81.Web.Controllers
         {
             if (loginCliente.Email!=null)
             {
-                try
-                {
-                    var mensagem = new ClienteBusiness().VerificaEmail(loginCliente.Email);
-                    loginCliente.Mensagem = mensagem;
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                loginCliente.Mensagem = _repository.GetEmail(loginCliente.Email);
             }
             return View(loginCliente);
         }
-
     }
 }
