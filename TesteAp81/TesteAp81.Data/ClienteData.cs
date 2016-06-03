@@ -7,7 +7,7 @@ using TesteAp81.Domain;
 
 namespace TesteAp81.Data
 {
-	public class ClienteData
+	public class ClienteData : IDisposable
 	{
 		private readonly SqlConnection _objSqlConnection;
 
@@ -221,6 +221,11 @@ namespace TesteAp81.Data
 					_objSqlConnection.Close();
 				}
 			}
+		}
+
+		public void Dispose()
+		{
+			_objSqlConnection.Close();
 		}
 	}
 }
