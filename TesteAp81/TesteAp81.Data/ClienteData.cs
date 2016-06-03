@@ -164,12 +164,14 @@ namespace TesteAp81.Data
 					var reader = command.ExecuteReader();
 					while (reader.Read())
 					{
-						var cliente = new Cliente();
-						cliente.Id = reader.GetInt32(0);
-						cliente.Nome = reader.GetString(1);
-						cliente.Email = reader.GetString(2);
-						cliente.Senha = reader.GetString(3);
-						cliente.Status = reader.GetInt32(4) == 1 ? true : false;
+						var cliente = new Cliente
+						{
+							Id = reader.GetInt32(0),
+							Nome = reader.GetString(1),
+							Email = reader.GetString(2),
+							Senha = reader.GetString(3),
+							Status = reader.GetInt32(4) == 1
+						};
 						lstClientes.Add(cliente);
 					}
 					reader.Close();
@@ -184,7 +186,6 @@ namespace TesteAp81.Data
 
 		public void InserirCliente(Cliente cliente)
 		{
-			string strRetorno = null;
 			using (_objSqlConnection)
 			{
 				try
@@ -210,7 +211,6 @@ namespace TesteAp81.Data
 					command.Parameters["@pstatus"].Value = cliente.Status ? 1 : 0;
 
 					command.ExecuteNonQuery();
-					strRetorno = "Cliente " + cliente.Nome + " cadastrado com sucesso.";
 				}
 				catch (Exception ex)
 				{
